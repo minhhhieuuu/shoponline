@@ -39,15 +39,13 @@ function handleClickRegisterBtn() {
 
         //validate input
         let check = validateInput(email, password, passwordConfirmation);
-        console.log(check);
         if (!check) {
             $.ajax({
                 url: `${window.location.origin}/register-new-user`,
                 method: "POST",
                 data: {fullName: fullName, email: email, password: password, passwordConfirmation: passwordConfirmation},
                 success: function(data) {
-                    alert("Create a new account succeeds!");
-                    window.location.href = "/login";
+                    window.location.href = "/";
                 },
                 error: function(err) {
                    alert(err.responseText);

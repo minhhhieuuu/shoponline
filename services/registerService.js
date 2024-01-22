@@ -4,7 +4,8 @@ import bcrypt from "bcryptjs";
 let createNewUser = (user) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let check = checkEmailUser(user.EMAIL);
+            let check = await checkEmailUser(user.EMAIL);
+            
             if(check === false) {
                 let salt = bcrypt.genSaltSync(10);
                 let data = {
@@ -12,9 +13,10 @@ let createNewUser = (user) => {
                     ADMIN: user.ADMIN,
                     FULLNAME: user.FULLNAME,
                     EMAIL: user.EMAIL,
-                    PASSWORD: bcrypt.hashSync(user.PASSWORD, salt)
+                    PASSWORD: bcrypt.hashSync(user.PASSWORD, salt),
+                    VERIFY: user.VERIFY
                 };
-
+                
                 connection.query("INSERT INTO onlineshop.user set ? ", data, function(error, rows) {
                     if (error) reject(error);
                     resolve("create a new user successfully");
@@ -47,7 +49,7 @@ let getMaxUserID = () => {
 let checkEmailUser = (email) => {
     return new Promise((resolve, reject) => {
         try{
-            connection.query("SELECT * from users where email = ?", email, function(error, rows) {
+            connection.query("SELECT * from user where EMAIL = ?", email, function(error, rows) {
                 if(error) reject(error);
                 if(rows.length > 0) resolve(true);
                 resolve(false);
