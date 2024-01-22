@@ -63,8 +63,9 @@ let createNewUser = async (req, res) => {
 };
 
 let checkLoggedOut = (req, res, next) => {
-    if(req.isAuthenticated()){
-        return res.redirect("/");
+    console.log(req.user);
+    if(req.isAuthenticated() && req.user.ADMIN === '1'){
+        return res.redirect("/admin");
     }
     next();
 };
@@ -75,6 +76,14 @@ let postLogOut = (req, res) =>{
     });
 };
 
+let checkAdminRole = (req, res, next) => {
+    if (req.isAuthenticated() && req.user.ADMIN === '1') {
+        return next();
+    } else {
+        return res.redirect("/login"); 
+    }
+};
+
 module.exports = {
     getRegisterPage: getRegisterPage,
     createNewUser: createNewUser,
@@ -82,5 +91,6 @@ module.exports = {
     handleLogin: handleLogin,
     checkLoggedIn: checkLoggedIn,
     checkLoggedOut: checkLoggedOut,
-    postLogOut: postLogOut
+    postLogOut: postLogOut,
+    checkAdminRole: checkAdminRole,
 };
