@@ -1,28 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Home Page</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+    <!-- Boxicons -->
+    <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <!-- Glide js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.core.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/css/glide.theme.css">
+    <!-- Custom StyleSheet -->
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Home page</title>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header" id="header">
+      <div class="navigation">
+        <div class="nav-center container d-flex">
+        <a href="/" class="logo"><h1>Online shoping</h1></a>
 
-    <!-- Bootstrap 4 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-</head>
-<body>
-<div class="container">
-    <div class="container">
-       <div>
-           <h1>Hello world!</h1>
-           <h2>Welcom: <%= user.FULLNAME %></h2>
-           <div>
-               <form method="POST" action="/logout">
-                   <button type="submit" class="btn btn-primary">Log out</button>
-               </form>
-           </div>
-       </div>
-    </div>
-</div>
-</body>
+          <ul class="nav-list d-flex">
+            <li class="nav-item">
+              <a href="/" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+              <a href="/listproduct" class="nav-link">Shop</a>
+            </li>
+            <li class="nav-item">
+            <a href="#terms" class="nav-link">Terms</a>
+            </li>
+            <li class="nav-item">
+              <a href="#about" class="nav-link">About</a>
+            </li>
+            <li class="nav-item">
+              <a href="#contact" class="nav-link">Contact</a>
+            </li>
+            <li class="icons d-flex">
+            <a href="login.html" class="icon">
+              <i class="bx bx-user"></i>
+            </a>
+            <div class="icon">
+              <i class="bx bx-search"></i>
+            </div>
+            <div class="icon">
+              <i class="bx bx-heart"></i>
+              <span class="d-flex">0</span>
+            </div>
+            <a href="cart.html" class="icon">
+              <i class="bx bx-cart"></i>
+              <span class="d-flex">0</span>
+            </a>
+          </li>
+          </ul>
+
+          <div class="icons d-flex " style="justify-content: center; align-items: center;">
+            <div class="icon">
+                <input type="text" style="width: 200px; height: 35px; ">
+              </div>
+            <a href="cart.html" class="icon">
+              <i class="bx bx-cart"></i>
+              <span class="d-flex">0</span>
+            </a>
+            <a href="/profile" class="icon">
+                <i class="bx bx-user"></i>
+              </a>
+          </div>
+
+          <div class="hamburger">
+            <i class="bx bx-menu-alt-left"></i>
+          </div>
+        </div>
+      </div>
+
+    
+
+    <!-- New Arrivals -->
+    <section class="section new-arrival">
+      <div class="title">
+        <h1>NEW ARRIVALS</h1>
+        <p>All the latest picked from designer of our store</p>
+      </div>
+
+      <div class="product-center">
+        <% if (products && products.length > 0) { %>
+            <% for (let i = 0; i < Math.min(12, products.length); i++) { %>
+                <% const product = products[i]; %>
+                <div class="product-item">
+                    <div class="overlay">
+                      <a href="/productdetail/<%= product.idproduct%>" class="product-thumb">
+                        <img src="<%= product.LINK.split(',')[0] %>" alt="" />
+                      </a>
+                    </div>
+                    <div class="product-info">
+                      <a href="/productdetail/<%= product.idproduct%> "><%= product.NAMEPRODUCT.length> 20 ? product.NAMEPRODUCT.slice(0, 40) +
+                        `...` : product.NAMEPRODUCT %></a>
+                      <h4><%= product.PRICE %> VND</h4>
+                    </div>
+                  </div>
+            <% } %>
+        <% } else { %>
+            <p>Không có sản phẩm nào.</p>
+        <% } %>
+      </div>
+    </section>
+
+
+
+
+
+
+    <!-- Featured -->
+  
+    <section class="section new-arrival">
+      <div class="title">
+        <h1>Featured</h1>
+        <p>All the latest picked from designer of our store</p>
+      </div>
+
+      <div class="product-center">
+        <% if (products && products.length > 0) { %>
+            <% for (let i = 13; i < Math.min(17, products.length); i++) { %>
+                <% const product = products[i]; %>
+                <div class="product-item">
+                    <div class="overlay">
+                      <a href="/productdetail/<%= product.idproduct%>" class="product-thumb">
+                        <img src="<%= product.LINK.split(',')[0] %>" alt="" />
+                      </a>
+                    </div>
+                    <div class="product-info">
+                      <a href="/productdetail/<%= product.idproduct%>"><%= product.NAMEPRODUCT.length> 20 ? product.NAMEPRODUCT.slice(0, 40) +
+                        `...` : product.NAMEPRODUCT %></a>
+                      <h4><%= product.PRICE %> VND</h4>
+                    </div>
+
+                  </div>
+            <% } %>
+        <% } else { %>
+            <p>Không có sản phẩm nào.</p>
+        <% } %>
+
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="row">
+        <div class="col d-flex">
+          <h4>INFORMATION</h4>
+          <a href="">About us</a>
+          <a href="">Contact Us</a>
+          <a href="">Term & Conditions</a>
+          <a href="">Shipping Guide</a>
+        </div>
+        <div class="col d-flex">
+          <h4>USEFUL LINK</h4>
+          <a href="">Online Store</a>
+          <a href="">Customer Services</a>
+          <a href="">Promotion</a>
+          <a href="">Top Brands</a>
+        </div>
+        <div class="col d-flex">
+          <span><i class='bx bxl-facebook-square'></i></span>
+          <span><i class='bx bxl-instagram-alt' ></i></span>
+          <span><i class='bx bxl-github' ></i></span>
+          <span><i class='bx bxl-twitter' ></i></span>
+          <span><i class='bx bxl-pinterest' ></i></span>
+        </div>
+      </div>
+    </footer>
+
+
+
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/glide.min.js"></script>
+  <script src="./js/slider.js"></script>
+  <script src="./js/index.js"></script>
 </html>

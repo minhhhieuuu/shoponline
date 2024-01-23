@@ -113,7 +113,6 @@ let createNewUser = async (req, res) => {
 };
 
 let checkLoggedOut = (req, res, next) => {
-    console.log(req.user);
     if(req.isAuthenticated() && req.user.ADMIN === '1'){
         return res.redirect("/admin");
     }
@@ -138,7 +137,6 @@ let checkAdminRole = (req, res, next) => {
 let sendPasswordResetEmail = async (req, res) => {
     try {
         let userEmail = req.body.email;
-        console.log(userEmail);
 
         // Kiểm tra xem email có tồn tại trong hệ thống hay không
         const user = await loginService.findUserByEmail(userEmail);

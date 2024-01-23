@@ -4,6 +4,8 @@ import Mailcontroller from "../controllers/Mailcontroller";
 import initPassportLocal from "../passport/passportlocal"
 import Homecontroller from "../controllers/Homecontroller";
 import Admincontroller from "../controllers/Admincontroller";
+import Poductcontroller from "../controllers/Productcontroller";
+import Usercontroler from "../controllers/Usercontroler";
 
 initPassportLocal();
 
@@ -24,6 +26,9 @@ let initWebRoutes = (app) => {
     router.get("/verify", Authcontroller.verifyEmail);
     router.get("/reset-password", Authcontroller.confirmPasswordReset);
     router.post("/reset-password", Authcontroller.resetPassword);
+    router.get("/listproduct", Poductcontroller.getProductPagePaged);
+    router.get("/profile",Usercontroler.getProFilePage)
+    router.get("/productdetail/:id",Poductcontroller.getProductDetailPage)
     return app.use("/",router);
 };
 
