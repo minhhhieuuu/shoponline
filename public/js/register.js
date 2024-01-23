@@ -45,7 +45,7 @@ function handleClickRegisterBtn() {
                 method: "POST",
                 data: {fullName: fullName, email: email, password: password, passwordConfirmation: passwordConfirmation},
                 success: function(data) {
-                    window.location.href = "/";
+                    window.location.href = "/verifymail";
                 },
                 error: function(err) {
                    alert(err.responseText);

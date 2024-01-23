@@ -6,25 +6,32 @@ let LocalStrategy = passportLocal.Strategy;
 
 let initPassportLocal = () => {
     passport.use("localLogin", new LocalStrategy({
-            usernameField: 'email',
-            passwordField: 'password',
-        },
-        async (email, password, done) => {
-            try {
-                await loginService.findUserByEmail(email).then(async (user) => {
-                    if (!user) return done(null, false, { message: `This user email "${email}" doesn't exist` })
-                    if (user) {
-                        //compare password
-                        let match = await loginService.compareUserPassword(user, password);
-                        if (match === true) return done(null, user, null);
-                        return done(null, false, { message: match });
-                    }
-                });
-
-            } catch (err) {
-                return done(null, false, { message: err });
+        usernameField: "email",
+        passwordField: "password",
+        passReqToCallback: true
+    }, async (req, email, password, done) => {
+        try {
+            const user = await loginService.findUserByEmail(email);
+    
+            if (!user) {
+                return done(null, false, { message: "User not found." });
             }
-        }));
+    
+            const isMatch = await loginService.compareUserPassword(user, password);
+    
+            if (isMatch === true) {
+                if (user.VERIFY === 0) {
+                    return done(null, false, { message: "User not verified" });
+                }
+                return done(null, user);
+            } else {
+                return done(null, false, { message: "Invalid password." });
+            }
+        } catch (error) {
+            return done(error);
+        }
+    }));
+    
 };
 
 passport.serializeUser((user, done) => {

@@ -14,7 +14,8 @@ let createNewUser = (user) => {
                     FULLNAME: user.FULLNAME,
                     EMAIL: user.EMAIL,
                     PASSWORD: bcrypt.hashSync(user.PASSWORD, salt),
-                    VERIFY: user.VERIFY
+                    VERIFY: user.VERIFY,
+                    VERIFYCODE: user.VERIFYCODE
                 };
                 
                 connection.query("INSERT INTO onlineshop.user set ? ", data, function(error, rows) {
@@ -60,7 +61,25 @@ let checkEmailUser = (email) => {
     }) ;
     };
 
+    let updateUserVerifyStatus = (userID, status) => {
+        return new Promise((resolve, reject) => {
+            try {
+                // Thực hiện cập nhật trạng thái xác minh trong cơ sở dữ liệu
+                connection.query("UPDATE onlineshop.user SET VERIFY = ? WHERE IDUSER = ?", [status, userID], function (error, result) {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(result);
+                    }
+                });
+            } catch (e) {
+                reject(e);
+            }
+        });
+    };
+
 module.exports = {
     createNewUser: createNewUser,
     getMaxUserID: getMaxUserID,
+    updateUserVerifyStatus: updateUserVerifyStatus,
 };
